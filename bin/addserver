@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+
+servername=$1
+orgname=$2
+username=$3
+
+print_usage() {
+    echo ""
+    echo "Usage: $0 <servername> <orgname> <username>"
+}
+
+if [ "x$servername" = "x" ]; then
+    echo "Need a servername!"
+    print_usage
+    exit 1
+fi
+if [ "x$orgname" = "x" ]; then
+    echo "Need a orgname!"
+    print_usage
+    exit 1
+fi
+if [ "x$username" = "x" ]; then
+    echo "Need a username!"
+    print_usage
+    exit 1
+fi
+
+SOURCE_DIR=$(cd "$(dirname "$(readlink -f "$0")")"; pwd -P)
+TARGET_DIR="$SOURCE_DIR/../$servername"
+TARGET_FILE="$SOURCE_DIR/../$servername/knife.rb"
+
+mkdir "$TARGET_DIR"
+cp "$SOURCE_DIR/../template/knife.rb" "$TARGET_FILE"
+
+perl -p -i -e "s/<servername>/$servername/g" "$TARGET_FILE"
+perl -p -i -e "s/<orgname>/$orgname/g" "$TARGET_FILE"
+perl -p -i -e "s/<username>/$username/g" "$TARGET_FILE"

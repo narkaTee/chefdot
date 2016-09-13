@@ -1,0 +1,11 @@
+# ignore all directorys
+/*/
+# except template
+!/template/
+# except bin
+!/bin/
+
+# ignore all certs
+*.pem
+*.crt
+
